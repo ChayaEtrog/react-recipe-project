@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "./UserReducer";
 import { Avatar, Box, Button, Grid2, IconButton } from "@mui/material";
 import FormModel from "./FormModel";
+import { blue } from "@mui/material/colors";
 
 function UserNameAvatar() {
 
@@ -32,7 +33,7 @@ function UserNameAvatar() {
     return <>
         <Grid2 >
             <IconButton onClick={() => setAnchorEl(!anchorEl)}>
-                <Avatar sx={{ bgcolor: avatarColor ,width:48,height:48,fontSize:25}}>{user.firstName[0]}</Avatar>
+                <Avatar sx={{ bgcolor: avatarColor ,width:48,height:48,fontSize:25}}>{user.email[0]}</Avatar>
             </IconButton>
 
             {anchorEl&&<div className="popup">
@@ -67,7 +68,7 @@ function UserNameAvatar() {
             <Button onClick={() => setIsModalOpen(true)} variant="outlined" sx={{
                 backgroundColor: 'white',
                 color: 'black',
-                borderColor: 'rgb(163, 163, 163)',
+                borderColor:  'rgb(163, 163, 163)',
                 '&:hover': {
                     backgroundColor: 'rgba(220, 219, 219, 0.46)',
                     borderColor: avatarColor,
@@ -77,7 +78,7 @@ function UserNameAvatar() {
         </Grid2>
         {
             isModalOpen && (
-                <FormModel setIsOpen={() => setIsModalOpen(false)} />
+                <FormModel setIsOpen={() => setIsModalOpen(false)} type={'UPDATE'}/>
             )
         }
     </>
