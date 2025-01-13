@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import { useReducer } from "react";
 
 function NavBar() {
-    const initialState: UserType = { firstName: "", lastName: "", email: "", password: "", address: "", phone: "" };
+    const initialState: UserType = { firstName: "", lastName: "", email: "", password: "", address: "", phone: "",userId:"" };
     const [user, userDispatch] = useReducer(UserReducer, initialState);
 
     return (<>
