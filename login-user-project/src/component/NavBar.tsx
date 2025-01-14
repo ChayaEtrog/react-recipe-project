@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import Login from "./Login";
-import UserReducer, { UserContext, UserType } from "./UserReducer";
+import UserReducer, { UserContext, UserType } from "./UseReducer";
 import { Box, Typography } from "@mui/material";
 import { useReducer } from "react";
 

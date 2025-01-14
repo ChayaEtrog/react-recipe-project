@@ -1,15 +1,15 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { UserContext } from "./UserReducer";
+import { UserContext } from "./UseReducer";
 import { Box, Button, Modal, TextField } from "@mui/material";
 import axios from "axios";
 import ErrorMessage from "./ErrorMessage";
 
 function FormModel({ setIsOpen, type, setIsLogedIn }: { setIsOpen: any, type: string, setIsLogedIn?: any }) {
     const { user, userDispatch } = useContext(UserContext);
-    const [open, setOpen] = useState(true);
     const [isSubmitOk, setIsSubmitOk] = useState(true);
-    const [error, setError] = useState('');
-let message='';
+    const [open, setOpen] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -32,7 +32,6 @@ let message='';
         alignItems: 'center',
     };
 
-
     const handleInputChange = () => {
         const isEmailValid = emailRef.current?.checkValidity() ?? false;
         const isPasswordValid = passwordRef.current?.checkValidity() ?? false;
@@ -43,6 +42,46 @@ let message='';
         setIsSubmitOk(!(user.email && user.password));
     }, []);
 
+
+   //Calling an asynchronous function to register
+    const handleSignup = async (newUserData: any) => {
+        const res = await axios.post('http://localhost:3000/api/user/register', {
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value
+        });
+        console.log(res);
+        newUserData.userId = res.data.userId;
+        userDispatch({ type: "CREATE_USER", data: newUserData });
+        setIsLogedIn();
+    };
+
+    // Calling an asynchronous function to login
+    const handleLogin = async (newUserData: any) => {
+        const res = await axios.post('http://localhost:3000/api/user/login', {
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value
+        });
+        newUserData.userId = res.data.user.id;
+        userDispatch({ type: "CREATE_USER", data: newUserData });
+        setIsLogedIn();
+    };
+
+    //Calling an asynchronous function to update user information
+    const handleUpdate = async (newUserData: any) => {
+        const res = await axios.put('http://localhost:3000/api/user', {
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
+            firstName: firstNameRef.current?.value,
+            lastName: lastNameRef.current?.value,
+            address: addressRef.current?.value,
+            phone: phoneRef.current?.value
+        }, {
+            headers: { 'user-id': '' + user.userId }
+        });
+        userDispatch({ type: "UPDATE_USER", data: newUserData });
+    };
+
+    //An asynchronous function to connect 
     const handleSubmit = async () => {
         const newUserData = {
             firstName: firstNameRef.current?.value || "",
@@ -54,66 +93,37 @@ let message='';
             userId: user.userId || "",
         };
 
-        if (type == "SIGNUP") {
-            try {
-                const res = await axios.post('http://localhost:3000/api/user/register',
-                    {
-                        email: emailRef.current?.value,
-                        password: passwordRef.current?.value
-                    }
-                )
-                console.log(res);
-                newUserData.userId = res.data.userId;
-                userDispatch({ type: "CREATE_USER", data: newUserData });
-                setIsLogedIn();
 
+        try {
+            //Try to perform all the asynchronous actions
+            if (type === "SIGNUP") {
+                await handleSignup(newUserData);
+            } else if (type === "LOGIN") {
+                await handleLogin(newUserData);
+            } else {
+                await handleUpdate(newUserData);
             }
-            catch (e) {
-                if (e.status === 422)
-                    alert('user already registered')
+
+            // Close the form only if no error occurred
+            setIsOpen(false);
+
+        } catch (e: any) {
+            console.error('Error during form submission:', e);
+
+            //Display the error message
+            if (e.response?.status === 401) {
+                setError('Invalid credentials');
+            } else if (e.response?.status === 422) {
+                setError('User already registered');
+            } else if (e.response?.status === 404) {
+                setError('User not found');
             }
-        }
-        else if (type == "LOGIN") {
-            try {
-                const res = await axios.post('http://localhost:3000/api/user/login',
-                    {
-                        email: emailRef.current?.value,
-                        password: passwordRef.current?.value
-                    }
-                )
-                newUserData.userId = res.data.user.id;
-                userDispatch({ type: "CREATE_USER", data: newUserData });
-                setIsLogedIn();
-            } catch (e) {
-                 if (e.status === 401)
-                    alert('invalid credentials')
-            }
-        }
-        else {
-            try {
-                const res = await axios.put('http://localhost:3000/api/user',
-                    {
-                        email: emailRef.current?.value,
-                        password: passwordRef.current?.value,
-                        firstName: firstNameRef.current?.value,
-                        lastName: lastNameRef.current?.value,
-                        address: addressRef.current?.value,
-                        phone: phoneRef.current?.value
-                    },
-                    { headers: { 'user-id': '' + user.userId } }
-                )
-                userDispatch({ type: "UPDATE_USER", data: newUserData });
-            }
-            catch (e) {
-                if (e.status === 404)
-                    alert('user not found')
-                
-            }
-        }
-        setIsOpen();
+
+        };
     }
 
     return <>
+        {(error) && <ErrorMessage message={error} />}
         <Modal open={open} onClose={() => setOpen(false)}>
             <Box sx={style} >
 
@@ -128,9 +138,6 @@ let message='';
                 <div> <Button onClick={handleSubmit} variant="outlined" disabled={isSubmitOk}>Submit</Button></div>
             </Box>
         </Modal >
-       {(error.length>0)&&<ErrorMessage message={error} />}
     </>
-
 }
-
 export default FormModel;
