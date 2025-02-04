@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TextField, Button, Box, Modal, Paper } from "@mui/material";
-import { AppDispatch, StoreType } from "../store/recipesStore";
-import { useDispatch, useSelector } from "react-redux";
-import { addRecipe, Recipe } from "../store/recipesSlice";
+import { AppDispatch } from "../store/recipesStore";
+import { useDispatch } from "react-redux";
+import { addRecipe, Recipe, updateRecipe } from "../store/recipesSlice";
 import IngredientsInput from "./IngredientInput";
-import { useState } from "react";
+import {  useState } from "react";
 
 
 
@@ -17,8 +17,9 @@ const recipeSchema = yup.object().shape({
     instructions: yup.string().required("please provide instructions"),
 });
 
-function RecipeForm({ authorId ,closeForm,recipe={ id: 0, title: "",description:"", ingredients: [], instructions: "" ,authorId:0} }: { authorId: number ,closeForm:Function,recipe?: Recipe}) {
+function RecipeForm({ authorId, closeForm, recipe = { id: 0, title: "", description: "", ingredients: [], instructions: "", authorId: authorId } }: { authorId: number, closeForm: Function, recipe?: Recipe }) {
     const [open, setOpen] = useState(true);
+
     const dispatch = useDispatch<AppDispatch>();
     const {
         register,
@@ -27,18 +28,23 @@ function RecipeForm({ authorId ,closeForm,recipe={ id: 0, title: "",description:
         formState: { errors },
     } = useForm({
         resolver: yupResolver(recipeSchema),
-        defaultValues: { title: "",description:"", ingredients:[], instructions: "" }
+        defaultValues: recipe
     });
 
     const onSubmit = (data: any) => {
-        console.log({ authorId: authorId, ...data });
-        dispatch(addRecipe({ authorId: authorId, ...data }))
+        if (recipe.title==""){
+            console.log({ authorId: authorId, ...data });
+            
+            dispatch(addRecipe({ authorId: authorId, ...data }))
+        }
+        else
+          dispatch(updateRecipe({id: recipe.id, updatedRecipe: {...data}}))
         closeForm(false);
     }
 
     return (
         <>
-            <Modal open={open} onClose={() => setOpen(false)}>
+            <Modal open={open} onClose={() => { setOpen(false); closeForm(false) }}>
                 <Box
                     component={Paper}
                     sx={{
@@ -63,7 +69,6 @@ function RecipeForm({ authorId ,closeForm,recipe={ id: 0, title: "",description:
                             {...register("title")}
                             error={!!errors.title}
                             helperText={errors.title?.message}
-                            defaultValue={recipe.title}
                         />
                         <TextField
                             label="description"

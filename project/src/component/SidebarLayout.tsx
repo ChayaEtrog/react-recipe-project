@@ -1,20 +1,22 @@
 import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
-import { Recipe } from "../store/recipesSlice";
+import { deleteRecipe, Recipe } from "../store/recipesSlice";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { handleGetById } from "../services/profileService";
 import ErrorMessage from "./ErrorMessage";
-import { UserContext } from "./UseReducer";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import RecipeForm from "./RecipeForm";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store/recipesStore";
 
-function SidebarLayout({ recipe }: { recipe: Recipe }) {
+function SidebarLayout({ recipe,userId }: { recipe: Recipe,userId:string }) {
     const [isFavorited, setIsFavorited] = useState(false);
     const [emailuser, setEmailUser] = useState('');
-    const { user } = useContext(UserContext);
     const [isEditMode, setIsEditMode] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {   
+    useEffect(() => {
         const fetchUser = async () => {
             try {
                 const data = await handleGetById(recipe.authorId);
@@ -30,28 +32,30 @@ function SidebarLayout({ recipe }: { recipe: Recipe }) {
     return (<>
         <Box sx={{ padding: 2, overflowY: 'auto', marginTop: '80px', maxHeight: 'calc(100vh - 80px)' }}>
 
-            <Avatar sx={{ bgcolor: 'rgb(235,214,167)', width: 30, height: 30, fontSize: 13,position: 'absolute',top: '100px', right: 22, }}>
+            <Avatar sx={{ bgcolor: 'rgb(235,214,167)', width: 30, height: 30, fontSize: 13, position: 'absolute', top: '100px', right: 22, }}>
                 {emailuser[0]}
             </Avatar>
 
             <IconButton
-                sx={{
-                    position: 'absolute',
-                    top: '95px',
-                    right: 55,
-                    color: isFavorited ? 'red' : 'gray',
-                }}
+                sx={{ position: 'absolute', top: '95px', right: 55, color: isFavorited ? 'red' : 'gray', }}
                 onClick={() => setIsFavorited(!isFavorited)}
             >
                 <FavoriteIcon />
             </IconButton>
+            {((+userId) == recipe.authorId) && <>
+            <IconButton
+                sx={{position: 'absolute',top: '95px',right: 88}}
+                onClick={()=>dispatch(deleteRecipe({recipeId: recipe.id, userId:userId}))}
+            >
+                <DeleteOutlineIcon />
+            </IconButton>
 
-            {((+user.userId)==recipe.authorId)&&<IconButton
-                sx={{position: 'absolute',  top: '95px', right: 88, }}
-                onClick={() =>setIsEditMode(true) }
+           <IconButton
+                sx={{ position: 'absolute', top: '95px', right: 122, }}
+                onClick={() => setIsEditMode(true)}
             >
                 <EditOutlinedIcon />
-            </IconButton>}
+            </IconButton></>}
 
             <Typography variant="h4" gutterBottom>
                 {recipe.title}
@@ -84,7 +88,7 @@ function SidebarLayout({ recipe }: { recipe: Recipe }) {
             </Typography>
             <Typography>{recipe.instructions}</Typography>
         </Box>
-        {isEditMode &&<RecipeForm authorId={recipe.authorId} closeForm={()=>setIsEditMode(false)} recipe={recipe}/>}
+        {isEditMode && <RecipeForm authorId={recipe.authorId} closeForm={() => setIsEditMode(false)} recipe={recipe} />}
     </>)
 }
 export default SidebarLayout;

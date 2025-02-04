@@ -44,7 +44,7 @@ function About() {
                         }}
                     >
                         <Avatar src={chef.img} sx={{ width: 100, height: 100 }} />
-                        <Typography variant="h6" sx={{ fontWeight: 'bold', marginTop: 1, color: '#34495e' }} textAlign="left">{chef.name}</Typography>
+                        <Typography  sx={{ fontWeight: 'bold', marginTop: 1, color: '#34495e' ,fontSize:'16px'}} textAlign="left">{chef.name}</Typography>
                     </Box>))}
             </Box>
 
@@ -53,7 +53,13 @@ function About() {
                 We believe that cooking is more than just a task—it's a creative and fulfilling experience. Join us as we explore new flavors,
                 experiment with recipes, and share the love for food. Start cooking today and make every meal special!
             </Typography>
+
         </Box>
+            <Box sx={{ backgroundColor: 'rgb(235,214,167)', padding: '16px 0 16px 0', textAlign: 'center' }}>
+                <Typography variant="body2" color="textSecondary">
+                    Chaya Etrog © 2025 All Rights Reserved.
+                </Typography>
+            </Box>
     </>)
 }
 

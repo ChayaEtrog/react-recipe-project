@@ -26,7 +26,6 @@ export const fetchData = createAsyncThunk('recipes/fetch',
 export const addRecipe = createAsyncThunk('recipes/add',
     async (recipe: Recipe, thunkAPI) => {
         try {
-            console.log(recipe.authorId);
             const response = await axios.post('http://localhost:3000/api/recipes',
                 recipe,
                 {
@@ -39,6 +38,38 @@ export const addRecipe = createAsyncThunk('recipes/add',
         }
     }
 )
+
+export const updateRecipe = createAsyncThunk(
+    'recipes/update',
+    async ({ id, updatedRecipe }: { id: number, updatedRecipe: Partial<Recipe> }, thunkAPI) => {
+        try {
+            const response = await axios.put(
+                `http://localhost:3000/api/recipes/${id}`,
+                updatedRecipe,
+                {
+                    headers: { "user-id": "" + updatedRecipe.authorId }
+                }
+            );
+            return response.data.recipe;
+        } catch (e: any) {
+            return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+);
+
+export const deleteRecipe = createAsyncThunk(
+    'recipes/delete',
+    async ({recipeId,userId}:{recipeId: number,userId:string}, thunkAPI) => {
+        try {
+            await axios.delete(`http://localhost:3000/api/recipes/${recipeId}`, {
+                headers: { "user-id": userId} 
+            });
+            return recipeId; 
+        } catch (e: any) {
+            return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+);
 
 const recipesSlice = createSlice({
     name: 'recipes',
@@ -75,6 +106,45 @@ const recipesSlice = createSlice({
 
                 })
             .addCase(addRecipe.rejected,
+                (state) => {
+                    state.error = "failed to add recipe"
+                    state.loading = false
+                    console.log('failed');
+                }
+            )
+            .addCase(updateRecipe.pending,
+                (state) => {
+                    state.loading = true
+                })
+            .addCase(updateRecipe.fulfilled,
+                (state, action) => {
+                    state.loading = false
+                    const index = state.receipesList.findIndex(recipe => recipe.id === action.payload.id);
+                    if (index !== -1) {
+                        console.log(state.receipesList[index]);
+                        console.log(index);
+                        
+                        state.receipesList[index] = action.payload;
+                    }
+
+                })
+            .addCase(updateRecipe.rejected,
+                (state) => {
+                    state.error = "failed to add recipe"
+                    state.loading = false
+                    console.log('failed');
+                }
+            )
+            .addCase(deleteRecipe.pending,
+                (state) => {
+                    state.loading = true
+                })
+            .addCase(deleteRecipe.fulfilled,
+                (state, action) => {
+                    state.loading = false
+                    state.receipesList = state.receipesList.filter(recipe => recipe.id !== action.payload);
+                })
+            .addCase(deleteRecipe.rejected,
                 (state) => {
                     state.error = "failed to add recipe"
                     state.loading = false

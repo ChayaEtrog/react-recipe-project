@@ -1,0 +1,220 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "name1",
+      "lastName": "name2",
+      "email": "n@n.com",
+      "password": "12345",
+      "address": "address 1 5",
+      "phone": "0548654321"
+    },
+    {
+      "id": 1735048531744,
+      "email": "v@v.com",
+      "password": "123456",
+      "firstName": "rryyff",
+      "lastName": "12345",
+      "address": "mkm",
+      "phone": "098765432"
+    },
+    {
+      "id": 1735048561067,
+      "email": "r@r.com",
+      "password": "123456"
+    },
+    {
+      "id": 1735056076483,
+      "email": "g@g.com",
+      "password": "45678"
+    },
+    {
+      "id": 1735056158117,
+      "email": "g@f.c",
+      "password": "1223"
+    },
+    {
+      "id": 1735056199077,
+      "email": "ee",
+      "password": "1212"
+    },
+    {
+      "id": 1735056264012,
+      "email": "rut@gmail.com",
+      "password": "123456789",
+      "firstName": "nechama",
+      "lastName": "lerner",
+      "address": "bbb 3 4",
+      "phone": "098765432"
+    },
+    {
+      "id": 1735057311320,
+      "email": "yafa@gmail.com",
+      "password": "12345",
+      "firstName": "qwerty",
+      "lastName": "yyyy",
+      "address": "cfcfc",
+      "phone": "098765432"
+    },
+    {
+      "id": 1738078356337,
+      "email": "4",
+      "password": "4",
+      "firstName": "k",
+      "lastName": "k",
+      "address": "",
+      "phone": ""
+    },
+    {
+      "id": 1738087375230,
+      "email": "chaya@gmail.com",
+      "password": "4321",
+      "firstName": "chaya",
+      "lastName": "etrog",
+      "address": "hashomer 47",
+      "phone": "0583777777"
+    },
+    {
+      "id": 1738093615712,
+      "email": "vvvv@www",
+      "password": "852",
+      "firstName": "chaya",
+      "lastName": "",
+      "address": "",
+      "phone": ""
+    },
+    {
+      "id": 1738165150207,
+      "email": "i@j",
+      "password": "741"
+    },
+    {
+      "id": 1738171413601,
+      "email": "b@q",
+      "password": "963"
+    },
+    {
+      "id": 1738275803325,
+      "email": "chaya@gco.mmail",
+      "password": "ss"
+    },
+    {
+      "id": 1738286075477,
+      "email": "p@w",
+      "password": "8852",
+      "firstName": "etrog",
+      "lastName": "",
+      "address": "",
+      "phone": ""
+    }
+  ],
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Pasta Alfredo",
+      "description": "Pasta with a rich cream sauce",
+      "authorId": 1735048531744,
+      "ingredients": [
+        "200g pasta",
+        "100ml cream",
+        "50g parmesan cheese",
+        "1 clove garlic",
+        "Salt",
+        "Pepper"
+      ],
+      "instructions": "Cook the pasta according to the package instructions. In a separate pan, heat the cream and add the garlic. Stir in the parmesan cheese until melted. Combine the pasta with the sauce and season with salt and pepper."
+    },
+    {
+      "id": 2,
+      "title": "Chicken Curry",
+      "description": "Spicy and flavorful chicken curry",
+      "authorId": 1735048531744,
+      "ingredients": [
+        "500g chicken breast",
+        "1 onion",
+        "2 cloves garlic",
+        "400ml coconut milk",
+        "Salt",
+        "Pepper"
+      ],
+      "instructions": "Heat the oil in a pan and sauté the chopped onion and garlic until golden. Add the chicken pieces and cook until browned. Stir in the curry powder and cook for another minute. Pour in the coconut milk and simmer for 20 minutes. Season with salt and pepper."
+    },
+    {
+      "id": 3,
+      "title": "Chocolate Cake",
+      "description": "Rich and moist chocolate cake",
+      "authorId": 1735048531744,
+      "ingredients": [
+        "200g flour",
+        "200g sugar",
+        "100g cocoa powder",
+        "1 tsp baking powder",
+        "1 tsp baking soda",
+        "2 eggs",
+        "240ml milk",
+        "120ml vegetable oil",
+        "2 tsp vanilla extract",
+        "240ml boiling water"
+      ],
+      "instructions": "Preheat the oven to 175°C (350°F). In a large bowl, mix the flour, sugar, cocoa powder, baking powder, and baking soda. Add the eggs, milk, oil, and vanilla extract, and mix until smooth. Gradually add the boiling water and mix until well combined. Pour the batter into a greased baking pan and bake for 30-35 minutes. Let cool before serving."
+    },
+    {
+      "id": 4,
+      "title": "Spaghetti Carbonara",
+      "description": "Classic Italian pasta dish with a creamy sauce",
+      "authorId": 1735048531744,
+      "ingredients": [
+        "200g spaghetti",
+        "100g pancetta",
+        "2 large eggs",
+        "50g Parmesan cheese",
+        "2 cloves garlic",
+        "Salt to taste",
+        "Black pepper to taste",
+        "1 tbsp olive oil"
+      ],
+      "instructions": "Cook the spaghetti according to the package instructions. In a pan, heat olive oil and sauté the pancetta until crispy. Add minced garlic and cook for another minute. In a bowl, whisk eggs and grated Parmesan cheese. Once the pasta is cooked, drain and immediately toss with the pancetta and garlic. Remove from heat and mix in the egg and cheese mixture, stirring quickly to create a creamy sauce. Season with salt and black pepper, and serve immediately."
+    },
+    {
+      "id": 5,
+      "title": "Chicken Curry",
+      "description": "A flavorful and spicy Indian-style chicken curry",
+      "authorId": 1735048531744,
+      "ingredients": [
+        "500g chicken breast, cubed",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "1 tbsp ginger, grated",
+        "2 tbsp curry powder",
+        "400ml coconut milk",
+        "1 tbsp tomato paste",
+        "1 red chili, chopped",
+        "1 tbsp vegetable oil",
+        "Salt to taste",
+        "Fresh cilantro for garnish"
+      ],
+      "instructions": "Heat vegetable oil in a large pan. Add onions and sauté until soft. Stir in garlic, ginger, and curry powder, cooking for 1 minute. Add the chicken and cook until browned. Mix in tomato paste and coconut milk, and bring to a simmer. Add chopped chili and cook for 15-20 minutes until the chicken is tender. Season with salt, garnish with fresh cilantro, and serve with rice."
+    },
+    {
+      "id": 6,
+      "title": "Vegetable Stir-Fry",
+      "description": "Quick and healthy stir-fried vegetables with a savory sauce",
+      "authorId": 1735048531744,
+      "ingredients": [
+        "1 red bell pepper, sliced",
+        "1 green bell pepper, sliced",
+        "1 carrot, julienned",
+        "1 zucchini, sliced",
+        "1 cup broccoli florets",
+        "2 cloves garlic, minced",
+        "1 tbsp soy sauce",
+        "1 tbsp oyster sauce",
+        "1 tbsp sesame oil",
+        "1 tsp cornstarch",
+        "2 tbsp water",
+        "1 tbsp vegetable oil"
+      ],
+      "instructions": "In a small bowl, mix soy sauce, oyster sauce, sesame oil, cornstarch, and water to create the sauce. Heat vegetable oil in a wok or large pan. Add garlic and sauté for a few seconds. Add all the vegetables and stir-fry on high heat for about 5 minutes until slightly tender but still crisp. Pour in the sauce and stir until evenly coated. Cook for another 2 minutes, then serve hot over rice or noodles."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, AccordionDetails, Accordion, AccordionSummary, ImageListItem, ImageListItemBar, ImageList } from "@mui/material";
+import { Box, Typography, Divider, AccordionDetails, Accordion, AccordionSummary, ImageListItem, ImageListItemBar, ImageList, Avatar } from "@mui/material";
 import homepage from "../../public/pictures/home image2.jpg"
 import ExpandMoreIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -14,7 +14,7 @@ function Home() {
     const experts = Exports
     const pictures = Pictures
     return (
-        <Box sx={{ padding: '0', width: '100%', margin: 0}}>
+        <Box sx={{ padding: '0', width: '100%', margin: 0 }}>
 
             <Box sx={{ width: '100%', height: '642px', backgroundImage: `url(${homepage})`, objectFit: 'cover', backgroundPosition: 'center', marginBottom: '35px' }}>
             </Box>
@@ -32,6 +32,10 @@ function Home() {
                         <ImageListItemBar
                             title={item.title}
                             position="below"
+                            sx={{
+                                '& .MuiImageListItemBar-title': { 
+                                    fontSize: '18px',
+                                }}}
                         />
                     </ImageListItem>
                 ))}
@@ -58,7 +62,10 @@ function Home() {
                             title={item.name}
                             position="below"
                             sx={{
-                                textAlign: 'center',
+                                textAlign: 'center', 
+                                '& .MuiImageListItemBar-title': { 
+                                    fontSize: '18px',
+                                }
                             }}
                         />
                     </ImageListItem>
@@ -90,7 +97,6 @@ function Home() {
                 </Accordion>
             ))}
 
-            {/* Footer */}
             <Box sx={{ backgroundColor: 'rgb(235,214,167)', padding: '16px 0', textAlign: 'center' }}>
                 <Typography variant="body2" color="textSecondary">
                     Chaya Etrog © 2025 All Rights Reserved.
